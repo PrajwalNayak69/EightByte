@@ -1,7 +1,7 @@
 [
   {
     "name": "Reliance Industries",
-    "symbol": "RELIANCE.NS",
+    "symbol": "AAPL",
     "exchange": "NSE",
     "purchasePrice": 2400,
     "qty": 10,
@@ -9,7 +9,7 @@
   },
   {
     "name": "Tata Consultancy Services",
-    "symbol": "TCS.NS",
+    "symbol": "GOOG",
     "exchange": "NSE",
     "purchasePrice": 3700,
     "qty": 5,
