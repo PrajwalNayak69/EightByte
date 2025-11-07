@@ -8,4 +8,7 @@ export interface StockRow {
   cmp?: number;
   presentValue?: number;
   gainLoss?: number;
+  sector: string;
+  currency?: string;
+  lastUpdated?: string;
 }
