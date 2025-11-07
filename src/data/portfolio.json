@@ -1,18 +1,26 @@
 [
   {
     "name": "Reliance Industries",
-    "symbol": "AAPL",
+    "symbol": "RELIANCE.NS",
     "exchange": "NSE",
+    "sector": "Energy",
     "purchasePrice": 2400,
-    "qty": 10,
-    "investment": 24000
+    "qty": 10
   },
   {
     "name": "Tata Consultancy Services",
-    "symbol": "GOOG",
+    "symbol": "TCS.NS",
     "exchange": "NSE",
+    "sector": "Technology",
     "purchasePrice": 3700,
-    "qty": 5,
-    "investment": 18500
+    "qty": 5
+  },
+  {
+    "name": "HDFC Bank",
+    "symbol": "HDFCBANK.NS",
+    "exchange": "NSE",
+    "sector": "Financials",
+    "purchasePrice": 1600,
+    "qty": 8
   }
 ]

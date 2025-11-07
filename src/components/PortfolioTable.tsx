@@ -2,43 +2,53 @@ import { StockRow } from "@/types/portfolio";
 
 export default function PortfolioTable({ rows }: { rows: StockRow[] }) {
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full border border-gray-200">
-        <thead className="bg-gray-100">
+    <div className="overflow-x-auto rounded-xl shadow-md border border-gray-700">
+      <table className="min-w-full text-sm text-gray-100">
+        <thead className="bg-gray-800 uppercase text-xs text-gray-300">
           <tr>
-            <th className="p-2 border">Stock</th>
-            <th className="p-2 border">Exchange</th>
-            <th className="p-2 border">Purchase Price</th>
-            <th className="p-2 border">Qty</th>
-            <th className="p-2 border">Investment</th>
-            <th className="p-2 border">CMP</th>
-            <th className="p-2 border">Present Value</th>
-            <th className="p-2 border">Gain/Loss</th>
+            <th className="p-3 border-b border-gray-700 text-left">Stock</th>
+            <th className="p-3 border-b border-gray-700 text-left">Exchange</th>
+            <th className="p-3 border-b border-gray-700 text-left">Purchase Price</th>
+            <th className="p-3 border-b border-gray-700 text-left">Qty</th>
+            <th className="p-3 border-b border-gray-700 text-left">Investment</th>
+            <th className="p-3 border-b border-gray-700 text-left">CMP</th>
+            <th className="p-3 border-b border-gray-700 text-left">Present Value</th>
+            <th className="p-3 border-b border-gray-700 text-left">Gain/Loss</th>
           </tr>
         </thead>
-        <tbody>
-          {rows.map((r) => (
-            <tr key={r.symbol}>
-              <td className="p-2 border">{r.name}</td>
-              <td className="p-2 border">{r.exchange}</td>
-              <td className="p-2 border">{r.purchasePrice}</td>
-              <td className="p-2 border">{r.qty}</td>
-              <td className="p-2 border">{r.investment}</td>
-              <td className="p-2 border">{r.cmp ?? "-"}</td>
-              <td className="p-2 border">{r.presentValue ?? "-"}</td>
-              <td
-                className={`p-2 border ${
-                  r.gainLoss && r.gainLoss > 0
-                    ? "text-green-600"
-                    : r.gainLoss && r.gainLoss < 0
-                    ? "text-red-600"
-                    : ""
-                }`}
+
+        <tbody className="divide-y divide-gray-800">
+          {rows.map((r) => {
+            const isGain = (r.gainLoss ?? 0) > 0;
+            const isLoss = (r.gainLoss ?? 0) < 0;
+            return (
+              <tr
+                key={r.symbol}
+                className="hover:bg-gray-900 transition-colors duration-150"
               >
-                {r.gainLoss ?? "-"}
-              </td>
-            </tr>
-          ))}
+                <td className="p-3">{r.name}</td>
+                <td className="p-3">{r.exchange}</td>
+                <td className="p-3">₹{r.purchasePrice}</td>
+                <td className="p-3">{r.qty}</td>
+                <td className="p-3">₹{r.investment.toLocaleString()}</td>
+                <td className="p-3">{r.cmp ? `₹${r.cmp}` : "-"}</td>
+                <td className="p-3">
+                  {r.presentValue ? `₹${r.presentValue.toLocaleString()}` : "-"}
+                </td>
+                <td
+                  className={`p-3 font-semibold ${
+                    isGain
+                      ? "text-green-400"
+                      : isLoss
+                      ? "text-red-400"
+                      : "text-gray-300"
+                  }`}
+                >
+                  {r.gainLoss ? `₹${r.gainLoss.toFixed(2)}` : "-"}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
