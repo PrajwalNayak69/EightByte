@@ -73,6 +73,7 @@ The app uses caching (20-second TTL) to avoid rate limits.
 Each stock updates automatically every 15 seconds.
 
 ## Folder Structure
+```
 src/
 ├── app/
 │   ├── api/
@@ -88,6 +89,7 @@ src/
 │
 └── types/
     └── portfolio.ts           # TypeScript types
+```
 
 ## Technical Highlights
 
