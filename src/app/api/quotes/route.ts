@@ -17,22 +17,23 @@ export async function GET(request: Request) {
 
   for (const symbol of symbols) {
     const cached = cache.get(symbol);
-    if (cached) {
-      console.log(`Cache hit: ${symbol}`);
+    if (cached) {;
       results.push({ symbol, ...cached, fromCache: true });
       continue;
     }
 
     try {
-      console.log(`Fetching fresh: ${symbol}`);
       const quote = await yahooFinance.quote(symbol);
-
       const cmp = quote?.regularMarketPrice ?? null;
-      const currency = quote?.currency ?? "—";
-      const lastUpdated = new Date().toISOString();
 
-      const result = { cmp, currency, lastUpdated };
-      cache.set(symbol, result); 
+      if (!cmp) throw new Error("CMP not found");
+
+      const result = {
+        cmp,
+        currency: quote?.currency ?? "INR",
+        lastUpdated: new Date().toISOString(),
+      };
+      cache.set(symbol, result);
       results.push({ symbol, ...result, fromCache: false });
     } catch (err) {
       console.error(`Failed ${symbol}:`, err);
