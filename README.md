@@ -1,36 +1,132 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Live Portfolio Dashboard  
+*A Full-Stack Financial Dashboard using Next.js, TypeScript, Tailwind, and Node.js*
 
-## Getting Started
+---
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This project is a **real-time portfolio tracking dashboard** that displays stock holdings with live market data.  
+It fetches **Current Market Price (CMP)** from **Yahoo Finance** and automatically recalculates **Present Value** and **Gain/Loss** every 15 seconds.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Built for the **Octa Byte AI** case study challenge.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Features
 
-## Learn More
+Displays detailed portfolio table:  
+- Stock name, exchange, purchase price, quantity  
+- Investment value, CMP, Present Value, and Gain/Loss  
 
-To learn more about Next.js, take a look at the following resources:
+Dynamic real-time updates (every 15 seconds)  
+ Live CMP data fetched from Yahoo Finance  
+Color-coded gains/losses (green = profit, red = loss)  
+Sector grouping with total investment & value per sector  
+Caching with NodeCache to reduce API load  
+Responsive, clean UI built with Tailwind CSS  
+TypeScript throughout for safer, maintainable code
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech Stack
 
-## Deploy on Vercel
+| Layer | Technology |
+|--------|-------------|
+| Frontend | Next.js (React + App Router) |
+| Backend | Node.js (Next.js API Route) |
+| Styling | Tailwind CSS |
+| Language | TypeScript |
+| API | Yahoo Finance (unofficial) |
+| Caching | NodeCache |
+| State Management | React hooks + useMemo |
+| Deployment | (Optional) Vercel |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Setup Instructions
+
+1. Clone the repository  
+   ```bash
+   git clone <your-repo-url>
+   cd eightbit
+
+2. Install dependencies
+    ```bash
+    npm install
+
+3. Run the development server
+     ```bash
+     npm run dev
+
+4. Open the app
+    http://localhost:3000
+
+
+## Data Source
+
+Yahoo Finance is used to fetch the Current Market Price (CMP).
+
+The Yahoo Finance API used here is unofficial, implemented via the yahoo-finance2 NPM package.
+
+The app uses caching (20-second TTL) to avoid rate limits.
+
+Each stock updates automatically every 15 seconds.
+
+## Folder Structure
+src/
+├── app/
+│   ├── api/
+│   │   └── quotes/
+│   │       └── route.ts       # Backend API (Yahoo Finance fetch + caching)
+│   ├── page.tsx               # Main dashboard (React logic + polling)
+│
+├── components/
+│   └── PortfolioTable.tsx     # Table UI with Tailwind styling
+│
+├── data/
+│   └── portfolio.json         # Local seed portfolio data
+│
+└── types/
+    └── portfolio.ts           # TypeScript types
+
+## Technical Highlights
+
+| Challenge                     | Solution                                    |
+| ----------------------------- | ------------------------------------------- |
+| Yahoo Finance API instability | Added error handling + caching              |
+| Rate limiting                 | Implemented in-memory cache (20s TTL)       |
+| React polling duplication     | Used `useRef` to prevent multiple intervals |
+| Real-time calculations        | Used `useMemo` to avoid unnecessary renders |
+| UI performance                | Separated table rendering and state updates |
+
+## How It Works
+On load, static portfolio JSON initializes investment data.
+
+Every 15 seconds, the app calls /api/quotes?symbols=....
+
+The backend fetches current CMPs from Yahoo Finance.
+
+Frontend recalculates:
+
+Present Value = CMP × Qty
+
+Gain/Loss = Present Value − Investment
+
+Sector totals and overall portfolio value are updated live.
+
+## Possible Improvements
+
+Add Google Finance / Finnhub fallback for reliability
+
+Integrate P/E ratio & earnings
+
+Add Recharts visualizations
+
+Add authentication and user-specific portfolios
+
+Deploy to Vercel with API routes cached using ISR
+
+## Author
+
+Prajwal Nayak
+Case Study Submission — Octa Byte AI Pvt. Ltd.
